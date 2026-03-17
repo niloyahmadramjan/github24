@@ -1,36 +1,22 @@
+/* ── Google Fonts ─────────────────────────────────────────────
+   Must be FIRST import before tailwindcss
+──────────────────────────────────────────────────────────────── */
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=JetBrains+Mono:wght@300;400;500&display=swap');
-@import "tailwindcss";
 
-:root {
-  --bg-primary: #080b0f;
-  --bg-secondary: #0d1117;
-  --bg-card: #0f1318;
-  --bg-elevated: #161b22;
-  --border: #21262d;
-  --text-primary: #e6edf3;
-  --text-secondary: #8b949e;
-  --text-muted: #484f58;
-  --accent-green: #39d353;
-  --accent-green-dim: #1a6630;
-  --accent-cyan: #00d4ff;
-  --accent-orange: #f78166;
-  --accent-purple: #bc8cff;
-  --glow-green: rgba(57, 211, 83, 0.15);
-  --glow-cyan: rgba(0, 212, 255, 0.15);
+
+/* ── Base reset ───────────────────────────────────────────────*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-@theme inline {
-  --color-background: var(--bg-primary);
-  --color-foreground: var(--bg-secondary);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #21262d;
-    --foreground: #e6edf3;
-  }
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  color-scheme: dark;
 }
 
 body {
@@ -41,6 +27,18 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   min-height: 100dvh;
+}
+
+/* ── Scrollbar ────────────────────────────────────────────────*/
+::-webkit-scrollbar        { width: 4px; }
+::-webkit-scrollbar-track  { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb  { background: var(--border); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* ── Text selection ───────────────────────────────────────────*/
+::selection {
+  background: var(--accent-green-dim);
+  color: var(--accent-green);
 }
 
 /* ── Noise texture overlay ────────────────────────────────────*/
@@ -75,30 +73,6 @@ body::before {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
-
-/* ── Animation utility classes ────────────────────────────────*/
-.animate-ticker     { animation: ticker     30s  linear      infinite; }
-.animate-float      { animation: float       6s  ease-in-out infinite; }
-.animate-blink      { animation: blink       1s  step-end    infinite; }
-.animate-pulse-glow { animation: pulse-glow  2.5s ease-in-out infinite; }
-.animate-fade-in-up { animation: fadeInUp   0.6s ease         forwards; }
-.animate-fade-in-left { animation: fadeInLeft 0.6s ease       forwards; }
-
-/* ── Font utility classes ─────────────────────────────────────
-   Use these in JSX: className="font-syne"
-──────────────────────────────────────────────────────────────── */
-@layer utilities {
-  .font-syne {
-    font-family: 'Syne', var(--font-syne), sans-serif;
-  }
-  .font-dm-sans {
-    font-family: 'DM Sans', var(--font-dm-sans), sans-serif;
-  }
-  .font-jb-mono {
-    font-family: 'JetBrains Mono', var(--font-jetbrains-mono), monospace;
-  }
-}
-
 
 /* ── Keyframe animations ──────────────────────────────────────*/
 @keyframes ticker {
@@ -136,14 +110,25 @@ body::before {
   to   { transform: rotate(360deg); }
 }
 
-/* ── Scrollbar ────────────────────────────────────────────────*/
-::-webkit-scrollbar        { width: 4px; }
-::-webkit-scrollbar-track  { background: var(--bg-primary); }
-::-webkit-scrollbar-thumb  { background: var(--border); border-radius: 2px; }
-::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+/* ── Animation utility classes ────────────────────────────────*/
+.animate-ticker     { animation: ticker     30s  linear      infinite; }
+.animate-float      { animation: float       6s  ease-in-out infinite; }
+.animate-blink      { animation: blink       1s  step-end    infinite; }
+.animate-pulse-glow { animation: pulse-glow  2.5s ease-in-out infinite; }
+.animate-fade-in-up { animation: fadeInUp   0.6s ease         forwards; }
+.animate-fade-in-left { animation: fadeInLeft 0.6s ease       forwards; }
 
-/* ── Text selection ───────────────────────────────────────────*/
-::selection {
-  background: var(--accent-green-dim);
-  color: var(--accent-green);
+/* ── Font utility classes ─────────────────────────────────────
+   Use these in JSX: className="font-syne"
+──────────────────────────────────────────────────────────────── */
+@layer utilities {
+  .font-syne {
+    font-family: 'Syne', var(--font-syne), sans-serif;
+  }
+  .font-dm-sans {
+    font-family: 'DM Sans', var(--font-dm-sans), sans-serif;
+  }
+  .font-jb-mono {
+    font-family: 'JetBrains Mono', var(--font-jetbrains-mono), monospace;
+  }
 }
