@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef } from 'react'
-import { motion, useInView } from 'framer-motion'
+import { motion, useInView, cubicBezier } from 'framer-motion';
 import { Card, CardTitle, CardDescription } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 
@@ -62,9 +62,15 @@ const container = {
 }
 const item = {
   hidden:  { opacity: 0, y: 32 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { 
+      duration: 0.5, 
+      ease: cubicBezier(0.22, 1, 0.36, 1) // ✅ wrap your array here
+    } 
+  },
 }
-
 export default function FeaturesSection() {
   const ref    = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
