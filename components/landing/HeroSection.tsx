@@ -189,26 +189,21 @@ function MockDashboard() {
               </div>
               <div className="flex items-end gap-[3px] h-16">
                 {BAR_HEIGHTS.map((h, i) => (
-                  <motion.div
-                    key={i}
-                    className="flex-1 rounded-t-[3px]"
-                    initial={{ scaleY: 0 }}
-                    animate={{ scaleY: 1 }}
-                    style={{ originY: "bottom" }}
-                    transition={{ duration: 0.45, delay: 1.1 + i * 0.04, ease: "easeOut" }}
-                    // inline style used so the gradient string resolves correctly
-                    // eslint-disable-next-line react/forbid-dom-props
-                    {...{
-                      style: {
-                        height: `${h}%`,
-                        originY: "bottom" as const,
-                        background:
-                          i >= 9
-                            ? "linear-gradient(to top, #7f6aff, #8b5cf6)"
-                            : "#f1f5f9",
-                      },
-                    }}
-                  />
+                 <motion.div
+  key={i}
+  className="flex-1 rounded-t-[3px]"
+  initial={{ scaleY: 0 }}
+  animate={{ scaleY: 1 }}
+  transition={{ duration: 0.45, delay: 1.1 + i * 0.04, ease: "easeOut" }}
+  style={{
+    height: `${h}%`,
+    transformOrigin: "bottom",   // merged and correct
+    background:
+      i >= 9
+        ? "linear-gradient(to top, #7f6aff, #8b5cf6)"
+        : "#f1f5f9",
+  }}
+/>
                 ))}
               </div>
               <div className="flex justify-between mt-2">
