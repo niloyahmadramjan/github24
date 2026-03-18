@@ -181,55 +181,6 @@ export default function RegisterPage() {
   return (
     <div className="min-h-screen w-full bg-white flex">
 
-      {/* ── LEFT: decorative (hidden mobile) ── */}
-      <div className="hidden lg:flex w-[420px] xl:w-[580px] flex-shrink-0 relative bg-[#0f172a] overflow-hidden flex-col items-start justify-center px-12 xl:px-16">
-        {/* Blobs */}
-        {[
-          { s: 300, x: "-15%", y: "-10%", c: "bg-violet-500/20" },
-          { s: 200, x: "60%",  y: "70%",  c: "bg-blue-500/20"   },
-        ].map((b, i) => (
-          <div
-            key={i}
-            className={`absolute rounded-full blur-3xl ${b.c}`}
-            style={{ width: b.s, height: b.s, left: b.x, top: b.y }}
-          />
-        ))}
-
-        <div className="relative z-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/15 text-white/80 text-xs font-semibold mb-8">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            Free forever plan available
-          </div>
-          <h2 className="text-3xl xl:text-4xl font-extrabold text-white tracking-tight leading-snug mb-5">
-            Start monitoring
-            <br />
-            <span className="bg-gradient-to-r from-violet-400 to-blue-400 bg-clip-text text-transparent">
-              in 2 minutes.
-            </span>
-          </h2>
-          <p className="text-white/50 text-sm leading-relaxed max-w-xs mb-10">
-            Connect your GitHub repos, link Telegram, and get notified
-            about every star, fork, issue and PR — for free.
-          </p>
-          {/* Steps */}
-          <div className="space-y-4">
-            {[
-              "Create your free account",
-              "Install the GitHub App",
-              "Connect Telegram",
-              "Get real-time alerts",
-            ].map((step, i) => (
-              <div key={step} className="flex items-center gap-3">
-                <div className="w-6 h-6 rounded-full bg-violet-600 flex items-center justify-center flex-shrink-0 text-white text-xs font-black">
-                  {i + 1}
-                </div>
-                <span className="text-white/70 text-sm">{step}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
       {/* ── RIGHT: form ── */}
       <div className="flex-1 flex flex-col justify-between px-4 sm:px-8 lg:px-14 xl:px-20 py-8 relative overflow-hidden">
         {/* Background */}

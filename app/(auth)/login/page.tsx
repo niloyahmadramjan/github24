@@ -296,61 +296,6 @@ export default function LoginPage() {
           </a>
         </p>
       </div>
-
-      {/* ── RIGHT PANEL — decorative (hidden on mobile) ── */}
-      <div className="hidden lg:flex flex-1 relative bg-[#0f172a] overflow-hidden">
-        {/* Ambient blobs */}
-        {DOTS.map((d, i) => (
-          <motion.div
-            key={i}
-            initial={{ scale: 0.6, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 1.2, delay: d.delay }}
-            className={`absolute rounded-full blur-3xl ${d.color} opacity-30`}
-            style={{ width: d.size, height: d.size, left: d.x, top: d.y }}
-          />
-        ))}
-
-        {/* Content */}
-        <div className="relative z-10 flex flex-col items-start justify-center px-14 xl:px-20">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/15 text-white/80 text-xs font-semibold mb-8">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            Real-time GitHub monitoring
-          </div>
-
-          <h2 className="text-3xl xl:text-4xl font-extrabold text-white tracking-tight leading-snug mb-5">
-            Your GitHub repos,
-            <br />
-            <span className="bg-gradient-to-r from-violet-400 to-blue-400 bg-clip-text text-transparent">
-              always in sight.
-            </span>
-          </h2>
-
-          <p className="text-white/50 text-base leading-relaxed max-w-sm mb-10">
-            Monitor stars, forks, issues and PRs in real time. Get instant
-            Telegram alerts and analyse contributor trends — all from one dashboard.
-          </p>
-
-          {/* Mini stat cards */}
-          <div className="grid grid-cols-2 gap-3 w-full max-w-xs">
-            {[
-              { value: "12K+",  label: "Active Users"   },
-              { value: "8.4M+", label: "Events Tracked" },
-              { value: "<3s",   label: "Alert Latency"  },
-              { value: "Free",  label: "To Start"       },
-            ].map((s) => (
-              <div
-                key={s.label}
-                className="bg-white/5 border border-white/10 rounded-xl px-4 py-3"
-              >
-                <p className="text-white font-extrabold text-lg leading-none">{s.value}</p>
-                <p className="text-white/40 text-xs mt-1">{s.label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
