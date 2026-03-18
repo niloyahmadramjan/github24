@@ -84,7 +84,7 @@ export type AuthResult<T> =
 ────────────────────────────────────────────────────────── */
 
 const api: AxiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000/api/v1",
+  baseURL: process.env.NEXT_PUBLIC_API_URL ?? "https://shobapp24-production.up.railway.app/api/v1",
   withCredentials: true, // sends better-auth.session_token cookie automatically
   headers: {
     "Content-Type": "application/json",
