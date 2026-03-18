@@ -12,6 +12,7 @@ import {
   HelpCircle,
   Mail,
 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
@@ -135,12 +136,18 @@ export default function Navbar() {
             onClick={closeMenu}
             className="flex items-center gap-2.5 group flex-shrink-0"
           >
-            <div className="w-9 h-9 rounded-xl bg-[#0f172a] flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-200">
+            {/* <div className="w-9 h-9 rounded-xl bg-[#0f172a] flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-200">
               <GitBranch className="w-[18px] h-[18px] text-white" strokeWidth={2.5} />
             </div>
             <span className="font-extrabold text-lg text-[#0f172a] tracking-tight">
               Git24
-            </span>
+            </span> */}
+           <Image
+      src="/assest/logo/navbar.png"
+      width={220}
+      height={120}
+      alt="Picture of the author"
+    />
           </Link>
 
           {/* ── Desktop centre links ── */}
