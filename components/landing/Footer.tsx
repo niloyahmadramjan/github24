@@ -1,53 +1,61 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Github, MessageCircle, Mail, ArrowRight, GitBranch, Heart, Zap } from "lucide-react";
+import {
+  Github,
+  MessageCircle,
+  Mail,
+  ArrowRight,
+  GitBranch,
+  Heart,
+  Zap,
+} from "lucide-react";
 import Link from "next/link";
 
 const FOOTER_COLS = [
   {
     title: "Product",
     links: [
-      { label: "Features",   href: "https://drakilo.com" },
-      { label: "Pricing",    href: "https://drakilo.com" },
-      { label: "Changelog",  href: "https://drakilo.com" },
-      { label: "Roadmap",    href: "https://drakilo.com" },
+      { label: "Features", href: "https://drakilo.com" },
+      { label: "Pricing", href: "https://drakilo.com" },
+      { label: "Changelog", href: "https://drakilo.com" },
+      { label: "Roadmap", href: "https://drakilo.com" },
     ],
   },
   {
     title: "Company",
     links: [
-      { label: "About",    href: "https://drakilo.com" },
-      { label: "Blog",     href: "https://drakilo.com" },
-      { label: "Careers",  href: "https://drakilo.com" },
-      { label: "Contact",  href: "https://drakilo.com" },
+      { label: "About", href: "https://drakilo.com" },
+      { label: "Blog", href: "https://drakilo.com" },
+      { label: "Careers", href: "https://drakilo.com" },
+      { label: "Contact", href: "https://drakilo.com" },
     ],
   },
   {
     title: "Legal",
     links: [
-      { label: "Privacy Policy",    href: "https://drakilo.com" },
-      { label: "Terms of Service",  href: "https://drakilo.com" },
-      { label: "Cookie Policy",     href: "https://drakilo.com" },
+      { label: "Privacy Policy", href: "https://drakilo.com" },
+      { label: "Terms of Service", href: "https://drakilo.com" },
+      { label: "Cookie Policy", href: "https://drakilo.com" },
     ],
   },
 ];
 
 const SOCIAL = [
-  { icon: Github,        href: "https://drakilo.com", label: "GitHub"    },
-  { icon: MessageCircle, href: "https://drakilo.com", label: "Telegram"  },
-  { icon: Mail,          href: "https://drakilo.com", label: "Email"     },
+  { icon: Github, href: "https://drakilo.com", label: "GitHub" },
+  { icon: MessageCircle, href: "https://drakilo.com", label: "Telegram" },
+  { icon: Mail, href: "https://drakilo.com", label: "Email" },
 ];
 
 export default function Footer() {
   return (
     <footer className="bg-[#0f172a] text-white">
-
       {/* ── CTA BANNER ─────────────────────────────────────────── */}
       <div className="border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16
-                        flex flex-col lg:flex-row items-center justify-between gap-8">
-
+        <div
+          className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16
+                        flex flex-col lg:flex-row items-center justify-between gap-8"
+        >
           {/* Text */}
           <div className="text-center lg:text-left">
             <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight mb-2 leading-snug">
@@ -69,7 +77,7 @@ export default function Footer() {
               className="w-full sm:w-auto"
             >
               <Link
-                href="/signup"
+                href="/register"
                 className="flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3 rounded-xl bg-white text-[#0f172a] font-bold text-sm hover:bg-[#f1f5f9] transition-colors shadow-lg"
               >
                 Get Started Free
@@ -89,13 +97,11 @@ export default function Footer() {
 
       {/* ── FOOTER BODY ────────────────────────────────────────── */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-12">
-
         {/* Grid:
               mobile  → 1 col brand full-width, then 2-col link grid
               md+     → 4 cols in one row
         */}
         <div className="mb-10">
-
           {/* Brand block — full width on all sizes */}
           <div className="mb-8 md:mb-0 md:hidden">
             <BrandBlock />
@@ -118,75 +124,71 @@ export default function Footer() {
         </div>
 
         {/* ── BOTTOM BAR ─────────────────────────────────────── */}
-        <div className="border-t border-white/10 pt-8
-                        flex flex-col sm:flex-row items-center justify-between gap-5">
-
+        <div
+          className="border-t border-white/10 pt-8
+                        flex flex-col sm:flex-row items-center justify-between gap-5"
+        >
           {/* Copyright + credits */}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-5">
+            {/* ── Left: copyright + credits ── */}
+            <div className="flex flex-col items-center sm:items-start gap-2 text-center sm:text-left">
+              {/* Copyright line */}
+              <p className="text-white/30 text-xs sm:text-sm">
+                © {new Date().getFullYear()} github24. All rights reserved.
+              </p>
 
-  {/* ── Left: copyright + credits ── */}
-  <div className="flex flex-col items-center sm:items-start gap-2 text-center sm:text-left">
+              {/* Built by line */}
+              <p className="text-white/30 text-xs sm:text-sm flex flex-wrap items-center justify-center sm:justify-start gap-x-1.5 gap-y-1">
+                <span className="flex items-center gap-1">
+                  Built with
+                  <Heart className="w-3 h-3 text-rose-400 fill-rose-400 flex-shrink-0" />
+                  by
+                </span>
 
-    {/* Copyright line */}
-    <p className="text-white/30 text-xs sm:text-sm">
-      © {new Date().getFullYear()} github24. All rights reserved.
-    </p>
+                {/* Arkan */}
+                <Link
+                  href="https://github.com/mdarkanurl"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-white/60 hover:text-white font-semibold transition-colors duration-200 group"
+                >
+                  <span className="w-4 h-4 rounded-full bg-white/10 group-hover:bg-white/20 flex items-center justify-center flex-shrink-0 transition-colors">
+                    <Github className="w-2.5 h-2.5" />
+                  </span>
+                  Arkan
+                </Link>
 
-    {/* Built by line */}
-    <p className="text-white/30 text-xs sm:text-sm flex flex-wrap items-center justify-center sm:justify-start gap-x-1.5 gap-y-1">
-      <span className="flex items-center gap-1">
-        Built with
-        <Heart className="w-3 h-3 text-rose-400 fill-rose-400 flex-shrink-0" />
-        by
-      </span>
+                <span className="text-white/20">&amp;</span>
 
-      {/* Arkan */}
-      <Link
-        href="https://github.com/mdarkanurl"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-flex items-center gap-1 text-white/60 hover:text-white font-semibold transition-colors duration-200 group"
-      >
-        <span className="w-4 h-4 rounded-full bg-white/10 group-hover:bg-white/20 flex items-center justify-center flex-shrink-0 transition-colors">
-          <Github className="w-2.5 h-2.5" />
-        </span>
-        Arkan
-      </Link>
+                {/* Ramjan */}
+                <Link
+                  href="https://github.com/niloyahmadramjan"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-white/60 hover:text-white font-semibold transition-colors duration-200 group"
+                >
+                  <span className="w-4 h-4 rounded-full bg-white/10 group-hover:bg-white/20 flex items-center justify-center flex-shrink-0 transition-colors">
+                    <Github className="w-2.5 h-2.5" />
+                  </span>
+                  Ramjan
+                </Link>
+              </p>
 
-      <span className="text-white/20">&amp;</span>
-
-      {/* Ramjan */}
-      <Link
-        href="https://github.com/niloyahmadramjan"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-flex items-center gap-1 text-white/60 hover:text-white font-semibold transition-colors duration-200 group"
-      >
-        <span className="w-4 h-4 rounded-full bg-white/10 group-hover:bg-white/20 flex items-center justify-center flex-shrink-0 transition-colors">
-          <Github className="w-2.5 h-2.5" />
-        </span>
-        Ramjan
-      </Link>
-    </p>
-
-    {/* Powered by */}
-    <p className="text-white/25 text-xs flex items-center gap-1.5">
-      <Zap className="w-3 h-3 text-violet-400 flex-shrink-0" />
-      Powered by{" "}
-      <Link
-        href="https://drakilo.com"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-violet-400 hover:text-violet-300 font-bold transition-colors duration-200"
-      >
-        Drakilo Team
-      </Link>
-    </p>
-  </div>
-
-  
-
-</div>
+              {/* Powered by */}
+              <p className="text-white/25 text-xs flex items-center gap-1.5">
+                <Zap className="w-3 h-3 text-violet-400 flex-shrink-0" />
+                Powered by{" "}
+                <Link
+                  href="https://drakilo.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-violet-400 hover:text-violet-300 font-bold transition-colors duration-200"
+                >
+                  Drakilo Team
+                </Link>
+              </p>
+            </div>
+          </div>
 
           {/* Social icons */}
           <div className="flex items-center gap-4">
@@ -226,7 +228,8 @@ function BrandBlock() {
         <span className="font-extrabold text-lg tracking-tight">github24</span>
       </Link>
       <p className="text-white/40 text-sm leading-relaxed max-w-[220px]">
-        Real-time GitHub monitoring and Telegram alerts for developers who care about their projects.
+        Real-time GitHub monitoring and Telegram alerts for developers who care
+        about their projects.
       </p>
     </div>
   );

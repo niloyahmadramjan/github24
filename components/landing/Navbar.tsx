@@ -25,11 +25,11 @@ import { useState, useEffect } from "react";
    NAV LINKS
 ───────────────────────────────────────────── */
 const NAV_LINKS = [
-  { label: "Features",     href: "#features",     icon: Zap            },
+  { label: "Features", href: "#features", icon: Zap },
   { label: "How It Works", href: "#how-it-works", icon: GitPullRequest },
-  { label: "Pricing",      href: "#pricing",      icon: DollarSign     },
-  { label: "FAQ",          href: "#faq",          icon: HelpCircle     },
-  { label: "Contact",      href: "#contact",      icon: Mail           },
+  { label: "Pricing", href: "#pricing", icon: DollarSign },
+  { label: "FAQ", href: "#faq", icon: HelpCircle },
+  { label: "Contact", href: "#contact", icon: Mail },
 ];
 
 /* ─────────────────────────────────────────────
@@ -40,14 +40,14 @@ const NAV_LINKS = [
 const EASE_OUT: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 const overlayVariants: Variants = {
-  hidden:  { opacity: 0 },
+  hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { duration: 0.25 } },
-  exit:    { opacity: 0, transition: { duration: 0.2, delay: 0.1 } },
+  exit: { opacity: 0, transition: { duration: 0.2, delay: 0.1 } },
 };
 
 // FIX 1: drawerVariants was never defined — added here
 const drawerVariants: Variants = {
-  hidden:  { opacity: 0, y: -16, scale: 0.98 },
+  hidden: { opacity: 0, y: -16, scale: 0.98 },
   visible: {
     opacity: 1,
     y: 0,
@@ -78,7 +78,7 @@ const itemVariants: Variants = {
 };
 
 const ctaVariants: Variants = {
-  hidden:  { opacity: 0, y: 12 },
+  hidden: { opacity: 0, y: 12 },
   visible: {
     opacity: 1,
     y: 0,
@@ -137,7 +137,6 @@ export default function Navbar() {
         transition={{ duration: 0.5, ease: "easeOut" }}
       >
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-
           {/* ── Logo ── */}
           <Link
             href="/"
@@ -176,7 +175,7 @@ export default function Navbar() {
             </Link>
             <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
               <Link
-                href="/signup"
+                href="/register"
                 className="inline-flex items-center gap-1.5 text-sm font-bold px-5 py-2.5 rounded-xl bg-[#0f172a] text-white hover:bg-[#1e293b] transition-colors duration-200 shadow-md"
               >
                 Get Started
@@ -190,7 +189,7 @@ export default function Navbar() {
           <div className="flex md:hidden items-center gap-2">
             <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
               <Link
-                href="/signup"
+                href="/register"
                 className={[
                   "inline-flex items-center justify-center gap-1.5",
                   "font-bold text-sm rounded-xl",
@@ -220,8 +219,8 @@ export default function Navbar() {
                   <motion.span
                     key="close"
                     initial={{ rotate: -45, opacity: 0 }}
-                    animate={{ rotate: 0,   opacity: 1 }}
-                    exit={{   rotate:  45, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: 45, opacity: 0 }}
                     transition={{ duration: 0.2 }}
                     className="flex items-center justify-center"
                   >
@@ -230,19 +229,21 @@ export default function Navbar() {
                 ) : (
                   <motion.span
                     key="open"
-                    initial={{ rotate: 45,  opacity: 0 }}
-                    animate={{ rotate: 0,   opacity: 1 }}
-                    exit={{   rotate: -45, opacity: 0 }}
+                    initial={{ rotate: 45, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: -45, opacity: 0 }}
                     transition={{ duration: 0.2 }}
                     className="flex items-center justify-center"
                   >
-                    <Menu className="w-4 h-4 text-[#0f172a]" strokeWidth={2.5} />
+                    <Menu
+                      className="w-4 h-4 text-[#0f172a]"
+                      strokeWidth={2.5}
+                    />
                   </motion.span>
                 )}
               </AnimatePresence>
             </motion.button>
           </div>
-
         </nav>
       </motion.header>
 
@@ -329,7 +330,7 @@ export default function Navbar() {
 
                 <motion.div whileTap={{ scale: 0.97 }}>
                   <Link
-                    href="/signup"
+                    href="/register"
                     onClick={closeMenu}
                     className="flex items-center justify-center gap-2 py-3 rounded-xl bg-[#0f172a] text-white font-bold text-sm hover:bg-[#1e293b] active:bg-[#0f172a] transition-colors duration-200 shadow-md"
                   >

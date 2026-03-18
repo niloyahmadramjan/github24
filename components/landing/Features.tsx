@@ -34,15 +34,37 @@ const MAIN_FEATURES = [
     preview: (
       <div className="mt-5 space-y-2">
         {[
-          { emoji: "⭐", msg: "torvalds starred linux", time: "just now", dot: "bg-blue-400" },
-          { emoji: "🍴", msg: "gvanrossum forked cpython", time: "4s ago", dot: "bg-indigo-400" },
-          { emoji: "🔔", msg: "3 new issues on awesome", time: "12s ago", dot: "bg-sky-400" },
+          {
+            emoji: "⭐",
+            msg: "torvalds starred linux",
+            time: "just now",
+            dot: "bg-blue-400",
+          },
+          {
+            emoji: "🍴",
+            msg: "gvanrossum forked cpython",
+            time: "4s ago",
+            dot: "bg-indigo-400",
+          },
+          {
+            emoji: "🔔",
+            msg: "3 new issues on awesome",
+            time: "12s ago",
+            dot: "bg-sky-400",
+          },
         ].map((n, i) => (
-          <div key={i} className="flex items-center gap-2.5 bg-white rounded-lg border border-[#e5e7eb] px-3 py-2">
+          <div
+            key={i}
+            className="flex items-center gap-2.5 bg-white rounded-lg border border-[#e5e7eb] px-3 py-2"
+          >
             <span className="text-sm">{n.emoji}</span>
-            <span className="text-xs text-[#475569] flex-1 truncate font-medium">{n.msg}</span>
+            <span className="text-xs text-[#475569] flex-1 truncate font-medium">
+              {n.msg}
+            </span>
             <span className="text-[10px] text-[#94a3b8]">{n.time}</span>
-            <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${n.dot}`} />
+            <span
+              className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${n.dot}`}
+            />
           </div>
         ))}
       </div>
@@ -62,18 +84,27 @@ const MAIN_FEATURES = [
       <div className="mt-5">
         <div className="bg-white rounded-xl border border-[#e5e7eb] p-4">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-bold text-[#0f172a]">Star Growth</span>
-            <span className="text-xs font-bold text-emerald-600 bg-emerald-50 border border-emerald-100 px-2 py-0.5 rounded-full">+34% ↑</span>
+            <span className="text-xs font-bold text-[#0f172a]">
+              Star Growth
+            </span>
+            <span className="text-xs font-bold text-emerald-600 bg-emerald-50 border border-emerald-100 px-2 py-0.5 rounded-full">
+              +34% ↑
+            </span>
           </div>
           {/* Mini bar chart */}
           <div className="flex items-end gap-1 h-16">
             {[30, 45, 38, 60, 52, 75, 68, 90, 82, 100, 88, 110].map((h, i) => (
-              <div key={i} className="flex-1 rounded-t-sm" style={{
-                height: `${h}%`,
-                background: i >= 9
-                  ? "linear-gradient(to top, #7f6aff, #8b5cf6)"
-                  : "#f1f5f9",
-              }} />
+              <div
+                key={i}
+                className="flex-1 rounded-t-sm"
+                style={{
+                  height: `${h}%`,
+                  background:
+                    i >= 9
+                      ? "linear-gradient(to top, #7f6aff, #8b5cf6)"
+                      : "#f1f5f9",
+                }}
+              />
             ))}
           </div>
           <div className="flex justify-between mt-2">
@@ -97,16 +128,38 @@ const MAIN_FEATURES = [
     preview: (
       <div className="mt-5 space-y-2">
         {[
-          { name: "torvalds", action: "Starred",     avatar: "T",  color: "bg-amber-100 text-amber-700" },
-          { name: "gvanrossum", action: "Forked",    avatar: "G",  color: "bg-blue-100 text-blue-700" },
-          { name: "sindresorhus", action: "Opened issue", avatar: "S", color: "bg-rose-100 text-rose-700" },
+          {
+            name: "torvalds",
+            action: "Starred",
+            avatar: "T",
+            color: "bg-amber-100 text-amber-700",
+          },
+          {
+            name: "gvanrossum",
+            action: "Forked",
+            avatar: "G",
+            color: "bg-blue-100 text-blue-700",
+          },
+          {
+            name: "sindresorhus",
+            action: "Opened issue",
+            avatar: "S",
+            color: "bg-rose-100 text-rose-700",
+          },
         ].map((u, i) => (
-          <div key={i} className="flex items-center gap-3 bg-white rounded-lg border border-[#e5e7eb] px-3 py-2">
-            <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-black flex-shrink-0 ${u.color}`}>
+          <div
+            key={i}
+            className="flex items-center gap-3 bg-white rounded-lg border border-[#e5e7eb] px-3 py-2"
+          >
+            <div
+              className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-black flex-shrink-0 ${u.color}`}
+            >
               {u.avatar}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-bold text-[#0f172a] truncate">@{u.name}</p>
+              <p className="text-xs font-bold text-[#0f172a] truncate">
+                @{u.name}
+              </p>
               <p className="text-[10px] text-[#94a3b8]">{u.action}</p>
             </div>
             <button className="text-[10px] font-bold text-violet-600 bg-violet-50 border border-violet-100 px-2 py-0.5 rounded-md hover:bg-violet-100 transition-colors">
@@ -123,56 +176,83 @@ const SECONDARY_FEATURES = [
   {
     icon: Zap,
     title: "Sub-3s Delivery",
-    description: "Edge infrastructure globally distributed. Alerts reach you before the GitHub page even refreshes.",
-    soft: "bg-amber-50", border: "border-amber-100", text: "text-amber-600",
+    description:
+      "Edge infrastructure globally distributed. Alerts reach you before the GitHub page even refreshes.",
+    soft: "bg-amber-50",
+    border: "border-amber-100",
+    text: "text-amber-600",
   },
   {
     icon: Filter,
     title: "Smart Filtering",
-    description: "Choose exactly which events trigger a notification per repo. Zero noise, all signal.",
-    soft: "bg-sky-50", border: "border-sky-100", text: "text-sky-600",
+    description:
+      "Choose exactly which events trigger a notification per repo. Zero noise, all signal.",
+    soft: "bg-sky-50",
+    border: "border-sky-100",
+    text: "text-sky-600",
   },
   {
     icon: GitPullRequest,
     title: "PR Tracking",
-    description: "Monitor pull request lifecycle — opened, reviewed, merged, or closed — with full context.",
-    soft: "bg-indigo-50", border: "border-indigo-100", text: "text-indigo-600",
+    description:
+      "Monitor pull request lifecycle — opened, reviewed, merged, or closed — with full context.",
+    soft: "bg-indigo-50",
+    border: "border-indigo-100",
+    text: "text-indigo-600",
   },
   {
     icon: Star,
     title: "Star History",
-    description: "See when your repo went viral. Replay the exact timeline of every star event with timestamps.",
-    soft: "bg-orange-50", border: "border-orange-100", text: "text-orange-600",
+    description:
+      "See when your repo went viral. Replay the exact timeline of every star event with timestamps.",
+    soft: "bg-orange-50",
+    border: "border-orange-100",
+    text: "text-orange-600",
   },
   {
     icon: RefreshCw,
     title: "Auto-Sync",
-    description: "New repos added to your GitHub account are detected and offered for monitoring automatically.",
-    soft: "bg-teal-50", border: "border-teal-100", text: "text-teal-600",
+    description:
+      "New repos added to your GitHub account are detected and offered for monitoring automatically.",
+    soft: "bg-teal-50",
+    border: "border-teal-100",
+    text: "text-teal-600",
   },
   {
     icon: Shield,
     title: "Secure by Design",
-    description: "Official GitHub OAuth, read-only scopes, end-to-end encrypted data. Revoke access any time.",
-    soft: "bg-rose-50", border: "border-rose-100", text: "text-rose-600",
+    description:
+      "Official GitHub OAuth, read-only scopes, end-to-end encrypted data. Revoke access any time.",
+    soft: "bg-rose-50",
+    border: "border-rose-100",
+    text: "text-rose-600",
   },
   {
     icon: MessageCircle,
     title: "Telegram Bot",
-    description: "A dedicated Telegram bot per workspace. Interact, mute repos, or run quick queries from chat.",
-    soft: "bg-cyan-50", border: "border-cyan-100", text: "text-cyan-600",
+    description:
+      "A dedicated Telegram bot per workspace. Interact, mute repos, or run quick queries from chat.",
+    soft: "bg-cyan-50",
+    border: "border-cyan-100",
+    text: "text-cyan-600",
   },
   {
     icon: Layout,
     title: "Multi-Repo View",
-    description: "Unified dashboard across all repos. Switch views, compare growth, and spot outliers instantly.",
-    soft: "bg-fuchsia-50", border: "border-fuchsia-100", text: "text-fuchsia-600",
+    description:
+      "Unified dashboard across all repos. Switch views, compare growth, and spot outliers instantly.",
+    soft: "bg-fuchsia-50",
+    border: "border-fuchsia-100",
+    text: "text-fuchsia-600",
   },
   {
     icon: GitFork,
     title: "Fork Analytics",
-    description: "Track which forks go active. See downstream contributors building on your work.",
-    soft: "bg-lime-50", border: "border-lime-100", text: "text-lime-700",
+    description:
+      "Track which forks go active. See downstream contributors building on your work.",
+    soft: "bg-lime-50",
+    border: "border-lime-100",
+    text: "text-lime-700",
   },
 ];
 
@@ -200,10 +280,14 @@ function MainFeatureCard({
     >
       {/* Top row */}
       <div className="flex items-start justify-between mb-4">
-        <div className={`w-11 h-11 rounded-xl ${feature.soft} ${feature.border} border flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+        <div
+          className={`w-11 h-11 rounded-xl ${feature.soft} ${feature.border} border flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}
+        >
           <Icon className={`w-5 h-5 ${feature.text}`} />
         </div>
-        <span className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full border ${feature.tagColor}`}>
+        <span
+          className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full border ${feature.tagColor}`}
+        >
           {feature.tag}
         </span>
       </div>
@@ -243,11 +327,17 @@ function SecondaryFeatureCard({
       transition={{ duration: 0.5, delay: index * 0.07, ease: "easeOut" }}
       className="bg-[#f8fafc] rounded-xl border border-[#e5e7eb] p-5 hover:bg-white hover:border-[#d1d5db] hover:shadow-md transition-all duration-250 group"
     >
-      <div className={`w-9 h-9 rounded-lg ${feature.soft} ${feature.border} border flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-250`}>
+      <div
+        className={`w-9 h-9 rounded-lg ${feature.soft} ${feature.border} border flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-250`}
+      >
         <Icon className={`w-4 h-4 ${feature.text}`} />
       </div>
-      <h4 className="text-[#0f172a] font-bold text-sm mb-1.5">{feature.title}</h4>
-      <p className="text-[#94a3b8] text-xs leading-relaxed">{feature.description}</p>
+      <h4 className="text-[#0f172a] font-bold text-sm mb-1.5">
+        {feature.title}
+      </h4>
+      <p className="text-[#94a3b8] text-xs leading-relaxed">
+        {feature.description}
+      </p>
     </motion.div>
   );
 }
@@ -262,7 +352,6 @@ export default function Features() {
   return (
     <section id="features" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-6">
-
         {/* ── Section header ── */}
         <motion.div
           ref={headerRef}
@@ -312,11 +401,12 @@ export default function Features() {
               All features available on the free plan.
             </p>
             <p className="text-[#475569] text-sm">
-              No credit card required. Upgrade only when you need more repos or advanced analytics.
+              No credit card required. Upgrade only when you need more repos or
+              advanced analytics.
             </p>
           </div>
           <motion.a
-            href="/signup"
+            href="/register"
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.97 }}
             className="flex-shrink-0 inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#0f172a] text-white font-bold text-sm shadow-md hover:bg-[#1e293b] transition-colors duration-200"
@@ -324,7 +414,6 @@ export default function Features() {
             Get Started Free →
           </motion.a>
         </motion.div>
-
       </div>
     </section>
   );

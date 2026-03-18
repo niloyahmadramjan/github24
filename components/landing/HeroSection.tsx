@@ -18,32 +18,112 @@ import { useEffect, useState } from "react";
    CONSTANTS
 ───────────────────────────────────────────── */
 const STATS = [
-  { value: "1.3K+",  label: "Active Users"   },
+  { value: "1.3K+", label: "Active Users" },
   { value: "10k+", label: "Events Tracked" },
-  { value: "99.9%", label: "Uptime"         },
-  { value: "4.9/5", label: "Star Rating"    },
+  { value: "99.9%", label: "Uptime" },
+  { value: "4.9/5", label: "Star Rating" },
 ];
 
 const STAT_CARDS = [
-  { label: "Total Stars", value: "48,291", delta: "+23% this week",  up: true  },
-  { label: "Forks",       value: "12,847", delta: "+18% this week",  up: true  },
-  { label: "Open Issues", value: "143",    delta: "12 closed today", up: false },
-  { label: "PRs Merged",  value: "2,104",  delta: "Auto-tracked",    up: true  },
+  { label: "Total Stars", value: "48,291", delta: "+23% this week", up: true },
+  { label: "Forks", value: "12,847", delta: "+18% this week", up: true },
+  { label: "Open Issues", value: "143", delta: "12 closed today", up: false },
+  { label: "PRs Merged", value: "2,104", delta: "Auto-tracked", up: true },
 ];
 
 const BAR_HEIGHTS = [22, 35, 28, 48, 42, 55, 50, 72, 66, 88, 80, 100];
 
 const EVENT_POOL = [
-  { icon: Star,           label: "New Star",      user: "torvalds",     repo: "linux",   color: "bg-amber-50 border-amber-200",   dot: "bg-amber-400",   text: "text-amber-600"   },
-  { icon: GitFork,        label: "Forked",         user: "gvanrossum",   repo: "cpython", color: "bg-blue-50 border-blue-200",     dot: "bg-blue-400",    text: "text-blue-600"    },
-  { icon: AlertCircle,    label: "Issue Opened",   user: "sindresorhus", repo: "awesome", color: "bg-rose-50 border-rose-200",     dot: "bg-rose-400",    text: "text-rose-600"    },
-  { icon: GitPullRequest, label: "PR Opened",      user: "yyx990803",    repo: "vue",     color: "bg-violet-50 border-violet-200", dot: "bg-violet-400",  text: "text-violet-600"  },
-  { icon: GitMerge,       label: "PR Merged",      user: "tj",           repo: "express", color: "bg-emerald-50 border-emerald-200",dot: "bg-emerald-400",text: "text-emerald-600" },
-  { icon: Tag,            label: "Release v2.4.1", user: "facebook",     repo: "react",   color: "bg-sky-50 border-sky-200",       dot: "bg-sky-400",     text: "text-sky-600"     },
-  { icon: Star,           label: "New Star",       user: "antirez",      repo: "redis",   color: "bg-amber-50 border-amber-200",   dot: "bg-amber-400",   text: "text-amber-600"   },
-  { icon: AlertCircle,    label: "Issue Closed",   user: "nicolo-ribaudo",repo: "babel",  color: "bg-teal-50 border-teal-200",     dot: "bg-teal-400",    text: "text-teal-600"    },
-  { icon: GitFork,        label: "Forked",         user: "denoland",     repo: "deno",    color: "bg-blue-50 border-blue-200",     dot: "bg-blue-400",    text: "text-blue-600"    },
-  { icon: GitPullRequest, label: "PR Merged",      user: "vercel",       repo: "next.js", color: "bg-violet-50 border-violet-200", dot: "bg-violet-400",  text: "text-violet-600"  },
+  {
+    icon: Star,
+    label: "New Star",
+    user: "torvalds",
+    repo: "linux",
+    color: "bg-amber-50 border-amber-200",
+    dot: "bg-amber-400",
+    text: "text-amber-600",
+  },
+  {
+    icon: GitFork,
+    label: "Forked",
+    user: "gvanrossum",
+    repo: "cpython",
+    color: "bg-blue-50 border-blue-200",
+    dot: "bg-blue-400",
+    text: "text-blue-600",
+  },
+  {
+    icon: AlertCircle,
+    label: "Issue Opened",
+    user: "sindresorhus",
+    repo: "awesome",
+    color: "bg-rose-50 border-rose-200",
+    dot: "bg-rose-400",
+    text: "text-rose-600",
+  },
+  {
+    icon: GitPullRequest,
+    label: "PR Opened",
+    user: "yyx990803",
+    repo: "vue",
+    color: "bg-violet-50 border-violet-200",
+    dot: "bg-violet-400",
+    text: "text-violet-600",
+  },
+  {
+    icon: GitMerge,
+    label: "PR Merged",
+    user: "tj",
+    repo: "express",
+    color: "bg-emerald-50 border-emerald-200",
+    dot: "bg-emerald-400",
+    text: "text-emerald-600",
+  },
+  {
+    icon: Tag,
+    label: "Release v2.4.1",
+    user: "facebook",
+    repo: "react",
+    color: "bg-sky-50 border-sky-200",
+    dot: "bg-sky-400",
+    text: "text-sky-600",
+  },
+  {
+    icon: Star,
+    label: "New Star",
+    user: "antirez",
+    repo: "redis",
+    color: "bg-amber-50 border-amber-200",
+    dot: "bg-amber-400",
+    text: "text-amber-600",
+  },
+  {
+    icon: AlertCircle,
+    label: "Issue Closed",
+    user: "nicolo-ribaudo",
+    repo: "babel",
+    color: "bg-teal-50 border-teal-200",
+    dot: "bg-teal-400",
+    text: "text-teal-600",
+  },
+  {
+    icon: GitFork,
+    label: "Forked",
+    user: "denoland",
+    repo: "deno",
+    color: "bg-blue-50 border-blue-200",
+    dot: "bg-blue-400",
+    text: "text-blue-600",
+  },
+  {
+    icon: GitPullRequest,
+    label: "PR Merged",
+    user: "vercel",
+    repo: "next.js",
+    color: "bg-violet-50 border-violet-200",
+    dot: "bg-violet-400",
+    text: "text-violet-600",
+  },
 ];
 
 /* ─────────────────────────────────────────────
@@ -70,7 +150,9 @@ function LiveFeed() {
     <div className="bg-white rounded-xl border border-[#e5e7eb] p-4 h-full flex flex-col">
       {/* Header */}
       <div className="flex items-center justify-between mb-3 flex-shrink-0">
-        <span className="text-xs font-bold text-[#0f172a]">Live Activity Feed</span>
+        <span className="text-xs font-bold text-[#0f172a]">
+          Live Activity Feed
+        </span>
         <span className="flex items-center gap-1.5 text-[10px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
           Live
@@ -92,18 +174,24 @@ function LiveFeed() {
                 transition={{ duration: 0.32, ease: "easeOut" }}
                 className={`flex items-center gap-2.5 px-2.5 py-2 rounded-lg border ${e.color}`}
               >
-                <div className={`w-5 h-5 rounded flex items-center justify-center flex-shrink-0 ${e.color}`}>
+                <div
+                  className={`w-5 h-5 rounded flex items-center justify-center flex-shrink-0 ${e.color}`}
+                >
                   <Icon className={`w-3 h-3 ${e.text}`} />
                 </div>
                 <div className="flex-1 min-w-0 flex items-baseline gap-1">
-                  <span className={`text-[10px] font-bold whitespace-nowrap ${e.text}`}>
+                  <span
+                    className={`text-[10px] font-bold whitespace-nowrap ${e.text}`}
+                  >
                     {e.label}
                   </span>
                   <span className="text-[10px] text-[#94a3b8] font-mono truncate">
                     {e.user}/{e.repo}
                   </span>
                 </div>
-                <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${e.dot}`} />
+                <span
+                  className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${e.dot}`}
+                />
               </motion.div>
             );
           })}
@@ -129,7 +217,6 @@ function MockDashboard() {
 
       {/* ── Browser shell ── */}
       <div className="relative rounded-2xl border border-[#e5e7eb] shadow-[0_28px_72px_-14px_rgba(15,23,42,0.15)] overflow-hidden bg-white">
-
         {/* Title bar */}
         <div className="flex items-center gap-3 px-5 py-3 bg-[#f8fafc] border-b border-[#e5e7eb]">
           <div className="flex gap-1.5 flex-shrink-0">
@@ -151,7 +238,6 @@ function MockDashboard() {
 
         {/* Dashboard body */}
         <div className="p-4 sm:p-6 bg-[#f8fafc]">
-
           {/* Stat cards — 2 cols on mobile, 4 on md+ */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3 mb-3 sm:mb-4">
             {STAT_CARDS.map((s, i) => (
@@ -162,9 +248,15 @@ function MockDashboard() {
                 transition={{ duration: 0.45, delay: 0.75 + i * 0.07 }}
                 className="bg-white rounded-xl border border-[#e5e7eb] p-3 sm:p-4"
               >
-                <p className="text-[10px] sm:text-[11px] text-[#94a3b8] font-medium mb-1 leading-tight">{s.label}</p>
-                <p className="text-base sm:text-xl font-extrabold text-[#0f172a]">{s.value}</p>
-                <p className={`text-[10px] sm:text-[11px] font-semibold mt-0.5 ${s.up ? "text-emerald-600" : "text-[#94a3b8]"}`}>
+                <p className="text-[10px] sm:text-[11px] text-[#94a3b8] font-medium mb-1 leading-tight">
+                  {s.label}
+                </p>
+                <p className="text-base sm:text-xl font-extrabold text-[#0f172a]">
+                  {s.value}
+                </p>
+                <p
+                  className={`text-[10px] sm:text-[11px] font-semibold mt-0.5 ${s.up ? "text-emerald-600" : "text-[#94a3b8]"}`}
+                >
                   {s.delta}
                 </p>
               </motion.div>
@@ -173,7 +265,6 @@ function MockDashboard() {
 
           {/* Chart + Live feed — stacked on mobile, side by side on lg */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-
             {/* Bar chart */}
             <motion.div
               initial={{ opacity: 0 }}
@@ -182,28 +273,34 @@ function MockDashboard() {
               className="bg-white rounded-xl border border-[#e5e7eb] p-4"
             >
               <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-bold text-[#0f172a]">Star Growth</span>
+                <span className="text-xs font-bold text-[#0f172a]">
+                  Star Growth
+                </span>
                 <span className="text-xs font-bold text-emerald-600 bg-emerald-50 border border-emerald-100 px-2 py-0.5 rounded-full">
                   +34% ↑
                 </span>
               </div>
               <div className="flex items-end gap-[3px] h-16">
                 {BAR_HEIGHTS.map((h, i) => (
-                 <motion.div
-  key={i}
-  className="flex-1 rounded-t-[3px]"
-  initial={{ scaleY: 0 }}
-  animate={{ scaleY: 1 }}
-  transition={{ duration: 0.45, delay: 1.1 + i * 0.04, ease: "easeOut" }}
-  style={{
-    height: `${h}%`,
-    transformOrigin: "bottom",   // merged and correct
-    background:
-      i >= 9
-        ? "linear-gradient(to top, #7f6aff, #8b5cf6)"
-        : "#f1f5f9",
-  }}
-/>
+                  <motion.div
+                    key={i}
+                    className="flex-1 rounded-t-[3px]"
+                    initial={{ scaleY: 0 }}
+                    animate={{ scaleY: 1 }}
+                    transition={{
+                      duration: 0.45,
+                      delay: 1.1 + i * 0.04,
+                      ease: "easeOut",
+                    }}
+                    style={{
+                      height: `${h}%`,
+                      transformOrigin: "bottom", // merged and correct
+                      background:
+                        i >= 9
+                          ? "linear-gradient(to top, #7f6aff, #8b5cf6)"
+                          : "#f1f5f9",
+                    }}
+                  />
                 ))}
               </div>
               <div className="flex justify-between mt-2">
@@ -233,8 +330,12 @@ function MockDashboard() {
           </svg>
         </div>
         <div>
-          <p className="text-xs font-bold text-[#0f172a] leading-tight">Telegram Alert</p>
-          <p className="text-[10px] text-[#475569] leading-tight mt-0.5">⭐ linux got 47 new stars</p>
+          <p className="text-xs font-bold text-[#0f172a] leading-tight">
+            Telegram Alert
+          </p>
+          <p className="text-[10px] text-[#475569] leading-tight mt-0.5">
+            ⭐ linux got 47 new stars
+          </p>
         </div>
       </motion.div>
 
@@ -250,8 +351,12 @@ function MockDashboard() {
           <Star className="w-4 h-4 text-white fill-white" />
         </div>
         <div>
-          <p className="text-xs font-bold text-[#0f172a] leading-tight">48,291 Stars</p>
-          <p className="text-[10px] text-emerald-600 font-semibold leading-tight mt-0.5">+1,204 this month</p>
+          <p className="text-xs font-bold text-[#0f172a] leading-tight">
+            48,291 Stars
+          </p>
+          <p className="text-[10px] text-emerald-600 font-semibold leading-tight mt-0.5">
+            +1,204 this month
+          </p>
         </div>
       </motion.div>
     </motion.div>
@@ -264,7 +369,6 @@ function MockDashboard() {
 export default function HeroSection() {
   return (
     <section className="relative w-full bg-white overflow-hidden">
-
       {/* Full-bleed dot grid */}
       <div
         className="absolute inset-0 opacity-[0.32] pointer-events-none select-none"
@@ -279,10 +383,8 @@ export default function HeroSection() {
 
       {/* ── Main content ── */}
       <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 pb-20 sm:pb-28">
-
         {/* ── TEXT BLOCK — perfectly centred ── */}
         <div className="flex flex-col items-center text-center mb-12 sm:mb-16">
-
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0, y: 14 }}
@@ -291,7 +393,7 @@ export default function HeroSection() {
             className="mb-6"
           >
             {/* <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-[#e5e7eb] shadow-sm text-sm font-semibold text-[#475569]"> */}
-              {/* <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse flex-shrink-0" />
+            {/* <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse flex-shrink-0" />
               Real-time GitHub Monitoring Platform
             </span> */}
           </motion.div>
@@ -306,7 +408,7 @@ export default function HeroSection() {
             Real-Time GitHub Monitoring
             <br />
             <span className="text-shadow-black text-[1.5rem] sm:text-4xl md:text-5xl lg:text-[3.25rem] font-extrabold  text-[#0f172a]  ">
-            Analyze Everything with AI
+              Analyze Everything with AI
             </span>
           </motion.h1>
 
@@ -317,10 +419,12 @@ export default function HeroSection() {
             transition={{ duration: 0.7, delay: 0.16 }}
             className="text-[#475569] text-base sm:text-lg md:text-xl leading-relaxed max-w-2xl mb-9"
           >
-            Connect your GitHub repos and get instant Telegram alerts for every star,
-            fork, issue&nbsp;&amp;&nbsp;PR — plus a powerful analytics dashboard to
-            track growth and engage contributors.{" "}
-            <span className="font-semibold text-[#0f172a]">Free to start, forever.</span>
+            Connect your GitHub repos and get instant Telegram alerts for every
+            star, fork, issue&nbsp;&amp;&nbsp;PR — plus a powerful analytics
+            dashboard to track growth and engage contributors.{" "}
+            <span className="font-semibold text-[#0f172a]">
+              Free to start, forever.
+            </span>
           </motion.p>
 
           {/* CTA buttons */}
@@ -336,7 +440,7 @@ export default function HeroSection() {
               className="w-full sm:w-auto"
             >
               <Link
-                href="/signup"
+                href="/register"
                 className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-7 py-3.5 rounded-xl bg-[#0f172a] text-white font-bold text-base shadow-lg hover:bg-[#1e293b] transition-colors duration-200"
               >
                 Get Started Free
@@ -361,8 +465,8 @@ export default function HeroSection() {
             className="mt-5 text-sm text-[#94a3b8] font-medium"
           >
             Trusted by{" "}
-            <span className="text-[#475569] font-semibold">1.3k+</span> developers
-            &nbsp;·&nbsp; No credit card required
+            <span className="text-[#475569] font-semibold">1.3k+</span>{" "}
+            developers &nbsp;·&nbsp; No credit card required
           </motion.p>
         </div>
 
@@ -379,9 +483,16 @@ export default function HeroSection() {
           className="mt-16 sm:mt-20 grid grid-cols-2 sm:grid-cols-4 gap-8 sm:gap-0 sm:divide-x sm:divide-[#e5e7eb]"
         >
           {STATS.map((s) => (
-            <div key={s.label} className="flex flex-col items-center text-center sm:px-6 lg:px-10">
-              <p className="text-2xl sm:text-3xl font-extrabold text-[#0f172a]">{s.value}</p>
-              <p className="text-xs text-[#94a3b8] font-medium mt-1.5 uppercase tracking-widest">{s.label}</p>
+            <div
+              key={s.label}
+              className="flex flex-col items-center text-center sm:px-6 lg:px-10"
+            >
+              <p className="text-2xl sm:text-3xl font-extrabold text-[#0f172a]">
+                {s.value}
+              </p>
+              <p className="text-xs text-[#94a3b8] font-medium mt-1.5 uppercase tracking-widest">
+                {s.label}
+              </p>
             </div>
           ))}
         </motion.div>
