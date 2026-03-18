@@ -122,38 +122,71 @@ export default function Footer() {
                         flex flex-col sm:flex-row items-center justify-between gap-5">
 
           {/* Copyright + credits */}
-          <div className="flex flex-col sm:flex-row items-center gap-2 text-center sm:text-left">
-            <p className="text-white/30 text-xs sm:text-sm">
-              © {new Date().getFullYear()} github24. Built with{" "}
-              <Heart className="w-3 h-3 inline text-rose-400 fill-rose-400" />{" "}
-              by developer{" "}
-              <Link
-                href="https://drakilo.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white/60 hover:text-white font-semibold underline underline-offset-2 transition-colors"
-              >
-                Arkan
-              </Link>
-            </p>
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-5">
 
-            {/* Divider dot — hidden on xs */}
-            <span className="hidden sm:inline text-white/20">·</span>
+  {/* ── Left: copyright + credits ── */}
+  <div className="flex flex-col items-center sm:items-start gap-2 text-center sm:text-left">
 
-            {/* Powered by */}
-            <p className="text-white/30 text-xs sm:text-sm flex items-center gap-1">
-              <Zap className="w-3 h-3 text-violet-400" />
-              Powered by{" "}
-              <Link
-                href="https://drakilo.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-violet-400 hover:text-violet-300 font-bold transition-colors ml-0.5"
-              >
-                Drakilo Team
-              </Link>
-            </p>
-          </div>
+    {/* Copyright line */}
+    <p className="text-white/30 text-xs sm:text-sm">
+      © {new Date().getFullYear()} github24. All rights reserved.
+    </p>
+
+    {/* Built by line */}
+    <p className="text-white/30 text-xs sm:text-sm flex flex-wrap items-center justify-center sm:justify-start gap-x-1.5 gap-y-1">
+      <span className="flex items-center gap-1">
+        Built with
+        <Heart className="w-3 h-3 text-rose-400 fill-rose-400 flex-shrink-0" />
+        by
+      </span>
+
+      {/* Arkan */}
+      <Link
+        href="https://github.com/mdarkanurl"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center gap-1 text-white/60 hover:text-white font-semibold transition-colors duration-200 group"
+      >
+        <span className="w-4 h-4 rounded-full bg-white/10 group-hover:bg-white/20 flex items-center justify-center flex-shrink-0 transition-colors">
+          <Github className="w-2.5 h-2.5" />
+        </span>
+        Arkan
+      </Link>
+
+      <span className="text-white/20">&amp;</span>
+
+      {/* Ramjan */}
+      <Link
+        href="https://github.com/niloyahmadramjan"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center gap-1 text-white/60 hover:text-white font-semibold transition-colors duration-200 group"
+      >
+        <span className="w-4 h-4 rounded-full bg-white/10 group-hover:bg-white/20 flex items-center justify-center flex-shrink-0 transition-colors">
+          <Github className="w-2.5 h-2.5" />
+        </span>
+        Ramjan
+      </Link>
+    </p>
+
+    {/* Powered by */}
+    <p className="text-white/25 text-xs flex items-center gap-1.5">
+      <Zap className="w-3 h-3 text-violet-400 flex-shrink-0" />
+      Powered by{" "}
+      <Link
+        href="https://drakilo.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-violet-400 hover:text-violet-300 font-bold transition-colors duration-200"
+      >
+        Drakilo Team
+      </Link>
+    </p>
+  </div>
+
+  
+
+</div>
 
           {/* Social icons */}
           <div className="flex items-center gap-4">
