@@ -1,294 +1,321 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
-import { motion, AnimatePresence } from 'framer-motion'
-import { cn } from '@/lib/utils'
-import { Button } from '../ui/button'
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import {
+  GitBranch,
+  ArrowRight,
+  Menu,
+  X,
+  Zap,
+  GitPullRequest,
+  DollarSign,
+  HelpCircle,
+  Mail,
+} from "lucide-react";
+import Link from "next/link";
+import { useState, useEffect } from "react";
 
+/* ─────────────────────────────────────────────
+   NAV LINKS — with icons for mobile drawer
+───────────────────────────────────────────── */
 const NAV_LINKS = [
-  { label: 'Features', href: '#features' },
-  { label: 'How It Works', href: '#how-it-works' },
-  { label: 'Integrations', href: '#integrations' },
-  { label: 'Pricing', href: '#pricing' },
-  { label: 'FAQ', href: '#faq' },
-]
+  { label: "Features",     href: "#features",      icon: Zap          },
+  { label: "How It Works", href: "#how-it-works",  icon: GitPullRequest },
+  { label: "Pricing",      href: "#pricing",       icon: DollarSign   },
+  { label: "FAQ",          href: "#faq",           icon: HelpCircle   },
+  { label: "Contact",      href: "#contact",       icon: Mail         },
+];
 
-const GithubIcon = () => (
-  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-  </svg>
-)
+/* ─────────────────────────────────────────────
+   ANIMATION VARIANTS
+───────────────────────────────────────────── */
 
+// Backdrop overlay fade
+const overlayVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.25 } },
+  exit:    { opacity: 0, transition: { duration: 0.2, delay: 0.1 } },
+};
+
+// Drawer slides in from the top
+const drawerVariants = {
+  hidden:  { opacity: 0, y: -16, scale: 0.98 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
+  },
+  exit: {
+    opacity: 0,
+    y: -12,
+    scale: 0.98,
+    transition: { duration: 0.22, ease: "easeIn" },
+  },
+};
+
+// Each nav item staggers top → bottom
+const itemVariants = {
+  hidden:  { opacity: 0, x: -18 },
+  visible: (i: number) => ({
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.32, delay: 0.1 + i * 0.07, ease: "easeOut" },
+  }),
+  exit: (i: number) => ({
+    opacity: 0,
+    x: -14,
+    transition: { duration: 0.18, delay: i * 0.03, ease: "easeIn" },
+  }),
+};
+
+// CTA buttons at bottom of drawer
+const ctaVariants = {
+  hidden:  { opacity: 0, y: 12 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.3, delay: 0.45, ease: "easeOut" },
+  },
+  exit: { opacity: 0, y: 8, transition: { duration: 0.15 } },
+};
+
+/* ─────────────────────────────────────────────
+   COMPONENT
+───────────────────────────────────────────── */
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false)
-  const [mobileOpen, setMobileOpen] = useState(false)
-  const [activeSection, setActiveSection] = useState('')
+  const [menuOpen, setMenuOpen] = useState(false);
+  const { scrollY } = useScroll();
 
-  // Handle scroll events for both navbar style and active section tracking
+  const shadow = useTransform(
+    scrollY,
+    [0, 60],
+    ["0 0 0 0 transparent", "0 1px 24px 0 rgba(15,23,42,0.08)"]
+  );
+  const bg = useTransform(
+    scrollY,
+    [0, 60],
+    ["rgba(255,255,255,0)", "rgba(255,255,255,0.97)"]
+  );
+
+  // Lock body scroll when menu is open
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20)
-      
-      // Update active section based on scroll position
-      const sections = NAV_LINKS.map(link => link.href.substring(1))
-      const currentSection = sections.find(section => {
-        const element = document.getElementById(section)
-        if (element) {
-          const rect = element.getBoundingClientRect()
-          return rect.top <= 100 && rect.bottom >= 100
-        }
-        return false
-      })
-      setActiveSection(currentSection || '')
-    }
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [menuOpen]);
 
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  // Close mobile menu on resize (if screen becomes desktop)
+  // Close menu on resize to desktop
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 768) {
-        setMobileOpen(false)
-      }
-    }
+      if (window.innerWidth >= 768) setMenuOpen(false);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
-
-  // Prevent body scroll when mobile menu is open
-  useEffect(() => {
-    if (mobileOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = 'unset'
-    }
-    return () => {
-      document.body.style.overflow = 'unset'
-    }
-  }, [mobileOpen])
-
-  // Handle smooth scroll for anchor links
-  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault()
-    const element = document.querySelector(href)
-    if (element) {
-      element.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      })
-      setMobileOpen(false)
-    }
-  }
+  const closeMenu = () => setMenuOpen(false);
 
   return (
     <>
+      {/* ══════════════════════════════════════
+          HEADER BAR
+      ══════════════════════════════════════ */}
       <motion.header
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ 
-          duration: 0.5, 
-          ease: [0.25, 0.1, 0.25, 1],
-          type: "tween"
-        }}
-        className={cn(
-          'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-          scrolled 
-            ? 'bg-[#0d1117]/90 backdrop-blur-xl border-b border-[#30363d] shadow-lg' 
-            : 'bg-transparent'
-        )}
+        style={{ boxShadow: shadow, backgroundColor: bg }}
+        className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b border-transparent"
+        initial={{ y: -24, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
       >
-        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16 md:h-20">
+        <nav className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
 
-          {/* Logo with hover effect */}
-          <Link 
-            href="/" 
-            className="flex items-center gap-2.5 group relative"
-            aria-label="GitHub24 Home"
+          {/* ── Logo ── */}
+          <Link
+            href="/"
+            onClick={closeMenu}
+            className="flex items-center gap-2.5 group flex-shrink-0"
           >
-            <div className="relative">
-              <div className="w-8 h-8 md:w-9 md:h-9 rounded-xl bg-gradient-to-br from-[#39d353] to-[#2ea44f] flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg shadow-[#39d353]/20">
-                <GithubIcon />
-              </div>
-              <div className="absolute -inset-1 bg-[#39d353]/20 rounded-xl blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="w-9 h-9 rounded-xl bg-[#0f172a] flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-200">
+              <GitBranch className="w-[18px] h-[18px] text-white" strokeWidth={2.5} />
             </div>
-            <span className="font-bold text-xl md:text-2xl text-[#e6edf3] tracking-tight">
-              GitHub<span className="text-[#39d353]">24</span>
+            <span className="font-extrabold text-lg text-[#0f172a] tracking-tight">
+              Git24
             </span>
           </Link>
 
-          {/* Desktop navigation links with active state */}
-          <ul className="hidden md:flex items-center gap-1 lg:gap-2">
-            {NAV_LINKS.map(link => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
-                  onClick={(e) => handleSmoothScroll(e, link.href)}
-                  className={cn(
-                    'relative px-3 lg:px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200',
-                    activeSection === link.href.substring(1)
-                      ? 'text-[#e6edf3] bg-[#1f2937]'
-                      : 'text-[#8b949e] hover:text-[#e6edf3] hover:bg-[#1f2937]/50'
-                  )}
-                >
-                  {link.label}
-                  {activeSection === link.href.substring(1) && (
-                    <motion.div
-                      layoutId="activeSection"
-                      className="absolute bottom-0 left-2 right-2 h-0.5 bg-[#39d353] rounded-full"
-                      transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                    />
-                  )}
-                </a>
-              </li>
+          {/* ── Desktop centre links ── */}
+          <div className="hidden md:flex items-center gap-0.5">
+            {NAV_LINKS.map(({ label, href }) => (
+              <Link
+                key={label}
+                href={href}
+                className="px-4 py-2 rounded-lg text-sm font-medium text-[#475569] hover:text-[#0f172a] hover:bg-[#f1f5f9] transition-all duration-150"
+              >
+                {label}
+              </Link>
             ))}
-          </ul>
-
-          {/* Desktop CTA buttons */}
-          <div className="hidden md:flex items-center gap-3">
-            <Link href="/login">
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                className="text-[#8b949e] hover:text-[#e6edf3] hover:bg-[#1f2937] px-4"
-              >
-                Sign in
-              </Button>
-            </Link>
-            <Link href="/register">
-              <Button 
-                variant="primary" 
-                size="sm"
-                className="bg-gradient-to-r from-[#39d353] to-[#2ea44f] hover:from-[#2ea44f] hover:to-[#39d353] text-white font-medium px-5 shadow-lg shadow-[#39d353]/20 hover:shadow-xl hover:shadow-[#39d353]/30 transition-all duration-300"
-              >
-                Get started free
-                <svg className="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </Button>
-            </Link>
           </div>
 
-          {/* Mobile menu button with animation */}
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden relative w-10 h-10 flex items-center justify-center rounded-lg hover:bg-[#1f2937] transition-colors focus:outline-none focus:ring-2 focus:ring-[#39d353]/50"
-            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={mobileOpen}
-          >
-            <div className="w-5 flex flex-col gap-1.5">
-              <span className={cn(
-                'block h-0.5 bg-[#e6edf3] transform transition-all duration-300 ease-in-out',
-                mobileOpen && 'rotate-45 translate-y-2'
-              )} />
-              <span className={cn(
-                'block h-0.5 bg-[#e6edf3] transition-all duration-300 ease-in-out',
-                mobileOpen && 'opacity-0 scale-0'
-              )} />
-              <span className={cn(
-                'block h-0.5 bg-[#e6edf3] transform transition-all duration-300 ease-in-out',
-                mobileOpen && '-rotate-45 -translate-y-2'
-              )} />
-            </div>
-          </button>
+          {/* ── Desktop right CTAs ── */}
+          <div className="hidden md:flex items-center gap-3">
+            <Link
+              href="/login"
+              className="text-sm font-semibold text-[#475569] hover:text-[#0f172a] transition-colors px-3 py-2"
+            >
+              Sign In
+            </Link>
+            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+              <Link
+                href="/signup"
+                className="inline-flex items-center gap-1.5 text-sm font-bold px-5 py-2.5 rounded-xl bg-[#0f172a] text-white hover:bg-[#1e293b] transition-colors duration-200 shadow-md"
+              >
+                Get Started
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </motion.div>
+          </div>
+
+          {/* ── Mobile: Sign In + Hamburger ── */}
+          <div className="flex md:hidden items-center gap-2">
+            <Link
+              href="/login"
+              className="text-sm font-semibold text-[#475569] hover:text-[#0f172a] transition-colors px-2 py-1.5"
+            >
+              Sign In
+            </Link>
+
+            <motion.button
+              onClick={() => setMenuOpen((v) => !v)}
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={menuOpen}
+              whileTap={{ scale: 0.9 }}
+              className="w-9 h-9 rounded-lg flex items-center justify-center bg-[#f1f5f9] hover:bg-[#e2e8f0] border border-[#e5e7eb] transition-colors duration-150"
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                {menuOpen ? (
+                  <motion.span
+                    key="close"
+                    initial={{ rotate: -45, opacity: 0 }}
+                    animate={{ rotate: 0,   opacity: 1 }}
+                    exit={{   rotate:  45, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <X className="w-4 h-4 text-[#0f172a]" strokeWidth={2.5} />
+                  </motion.span>
+                ) : (
+                  <motion.span
+                    key="open"
+                    initial={{ rotate: 45,  opacity: 0 }}
+                    animate={{ rotate: 0,   opacity: 1 }}
+                    exit={{   rotate: -45, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Menu className="w-4 h-4 text-[#0f172a]" strokeWidth={2.5} />
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </motion.button>
+          </div>
         </nav>
       </motion.header>
 
-      {/* Mobile menu with improved animation and accessibility */}
-      <AnimatePresence mode="wait">
-        {mobileOpen && (
+      {/* ══════════════════════════════════════
+          MOBILE MENU
+      ══════════════════════════════════════ */}
+      <AnimatePresence>
+        {menuOpen && (
           <>
-            {/* Backdrop overlay */}
+            {/* Backdrop */}
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 md:hidden"
-              onClick={() => setMobileOpen(false)}
-              aria-hidden="true"
+              key="backdrop"
+              variants={overlayVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              onClick={closeMenu}
+              className="fixed inset-0 z-40 bg-[#0f172a]/20 backdrop-blur-sm md:hidden"
             />
-            
-            {/* Menu panel */}
+
+            {/* Drawer panel */}
             <motion.div
-              initial={{ opacity: 0, y: -20, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -20, scale: 0.95 }}
-              transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
-              className="fixed top-16 left-0 right-0 z-40 md:hidden mx-4 mt-2"
+              key="drawer"
+              variants={drawerVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="fixed top-16 left-3 right-3 z-50 md:hidden rounded-2xl bg-white border border-[#e5e7eb] shadow-[0_16px_48px_-8px_rgba(15,23,42,0.18)] overflow-hidden"
             >
-              <div className="bg-[#0d1117]/95 backdrop-blur-xl border border-[#30363d] rounded-2xl shadow-2xl overflow-hidden">
-                <div className="px-4 py-3 flex flex-col gap-1 max-h-[calc(100vh-6rem)] overflow-y-auto">
-                  
-                  {/* Navigation links */}
-                  {NAV_LINKS.map((link, index) => (
-                    <motion.div
-                      key={link.href}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.05 }}
-                    >
-                      <a
-                        href={link.href}
-                        onClick={(e) => handleSmoothScroll(e, link.href)}
-                        className={cn(
-                          'block px-4 py-3.5 text-base font-medium rounded-xl transition-all duration-200',
-                          activeSection === link.href.substring(1)
-                            ? 'text-[#e6edf3] bg-[#1f2937] border-l-4 border-[#39d353]'
-                            : 'text-[#8b949e] hover:text-[#e6edf3] hover:bg-[#1f2937]/50'
-                        )}
-                      >
-                        {link.label}
-                      </a>
-                    </motion.div>
-                  ))}
-                  
-                  {/* CTA buttons */}
-                  <motion.div 
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.25 }}
-                    className="mt-4 pt-4 border-t border-[#30363d] flex flex-col gap-2"
+              {/* Nav links */}
+              <div className="p-3">
+                {NAV_LINKS.map(({ label, href, icon: Icon }, i) => (
+                  <motion.div
+                    key={label}
+                    custom={i}
+                    variants={itemVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
                   >
-                    <Link href="/login" onClick={() => setMobileOpen(false)}>
-                      <Button 
-                        variant="secondary" 
-                        size="lg" 
-                        className="w-full bg-[#1f2937] hover:bg-[#2d3748] text-[#e6edf3] border border-[#30363d] font-medium"
-                      >
-                        Sign in
-                      </Button>
-                    </Link>
-                    <Link href="/register" onClick={() => setMobileOpen(false)}>
-                      <Button 
-                        variant="primary" 
-                        size="lg" 
-                        className="w-full bg-gradient-to-r from-[#39d353] to-[#2ea44f] hover:from-[#2ea44f] hover:to-[#39d353] text-white font-medium shadow-lg"
-                      >
-                        Get started free
-                        <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </svg>
-                      </Button>
+                    <Link
+                      href={href}
+                      onClick={closeMenu}
+                      className="flex items-center gap-3 px-4 py-3 rounded-xl text-[#475569] hover:text-[#0f172a] hover:bg-[#f8fafc] active:bg-[#f1f5f9] transition-all duration-150 group"
+                    >
+                      {/* Icon bubble */}
+                      <div className="w-8 h-8 rounded-lg bg-[#f1f5f9] group-hover:bg-[#e2e8f0] flex items-center justify-center flex-shrink-0 transition-colors duration-150">
+                        <Icon className="w-4 h-4 text-[#475569] group-hover:text-[#0f172a]" strokeWidth={1.8} />
+                      </div>
+                      <span className="font-semibold text-sm">{label}</span>
+                      {/* Chevron */}
+                      <ArrowRight className="w-3.5 h-3.5 ml-auto opacity-0 group-hover:opacity-100 text-[#94a3b8] group-hover:translate-x-0.5 transition-all duration-150" />
                     </Link>
                   </motion.div>
-                </div>
+                ))}
               </div>
+
+              {/* Divider */}
+              <motion.div
+                custom={NAV_LINKS.length}
+                variants={itemVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                className="mx-4 h-px bg-[#f1f5f9]"
+              />
+
+              {/* CTA buttons */}
+              <motion.div
+                variants={ctaVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                className="p-3 flex flex-col gap-2"
+              >
+                {/* Sign In */}
+                <Link
+                  href="/login"
+                  onClick={closeMenu}
+                  className="flex items-center justify-center gap-2 py-3 rounded-xl border border-[#e5e7eb] bg-[#f8fafc] text-[#0f172a] font-semibold text-sm hover:bg-[#f1f5f9] active:bg-[#e2e8f0] transition-colors duration-150"
+                >
+                  Sign In
+                </Link>
+
+                {/* Get Started */}
+                <motion.div whileTap={{ scale: 0.97 }}>
+                  <Link
+                    href="/signup"
+                    onClick={closeMenu}
+                    className="flex items-center justify-center gap-2 py-3 rounded-xl bg-[#0f172a] text-white font-bold text-sm hover:bg-[#1e293b] active:bg-[#0f172a] transition-colors duration-200 shadow-md"
+                  >
+                    Get Started Free
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </motion.div>
+              </motion.div>
             </motion.div>
           </>
         )}
       </AnimatePresence>
-
-      {/* Skip to content link for accessibility */}
-      <a
-        href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-[100] bg-[#39d353] text-black px-4 py-2 rounded-lg"
-      >
-        Skip to main content
-      </a>
     </>
-  )
+  );
 }

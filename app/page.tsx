@@ -1,16 +1,12 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/landing/Navbar";
 import HeroSection from "@/components/landing/HeroSection";
-import FeaturesSection from "@/components/landing/FeaturesSection";
-import HowItWorksSection from "@/components/landing/HowItWorksSection";
-import { IntegrationsSection } from "@/components/landing/IntegrationsSection";
-import {
-  StatsSection,
-  PricingSection,
-  FAQSection,
-  CTASection,
-  Footer,
-} from "@/components/landing/sections";
+import HowItWorks from "@/components/landing/Howitwork";
+import Pricing from "@/components/landing/Pricing";
+import FAQ from "@/components/landing/Faq";
+import Features from "@/components/landing/Features";
+import ContactSection from "@/components/landing/ContactSection";
+import Footer from "@/components/landing/Footer";
 
 export const metadata: Metadata = {
   title: "GitHub24 — Real-time GitHub Activity Monitor",
@@ -23,13 +19,11 @@ export default function LandingPage() {
     <main>
       <Navbar />
       <HeroSection />
-      <StatsSection />
-      <FeaturesSection />
-      <HowItWorksSection />
-      <IntegrationsSection />
-      <PricingSection />
-      <FAQSection />
-      <CTASection />
+      <Features/>
+      <HowItWorks />
+      <Pricing />
+      <FAQ />
+      <ContactSection />
       <Footer />
     </main>
   );
