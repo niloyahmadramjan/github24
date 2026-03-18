@@ -137,9 +137,9 @@ export function ForgotPasswordPage() {
                     Email address
                   </label>
                   <div className="relative">
-                    <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#94a3b8] pointer-events-none">
+                    {/* <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#94a3b8] pointer-events-none">
                       <Mail className="w-4 h-4" />
-                    </span>
+                    </span> */}
                     <input
                       id="email" type="email" placeholder="you@example.com"
                       value={email} onChange={(e) => setEmail(e.target.value)}

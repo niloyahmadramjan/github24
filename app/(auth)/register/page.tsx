@@ -142,12 +142,12 @@ function Field({
 
       <div className="relative flex items-center">
         {/* Left icon — positioned absolutely, pointer-events none */}
-        <span
+        {/* <span
           aria-hidden="true"
           className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-[#94a3b8] z-10"
         >
           {icon}
-        </span>
+        </span> */}
 
         <input
           id={id}
@@ -158,8 +158,8 @@ function Field({
           autoComplete={autoComplete}
           className={[
             // base
-            "w-full py-3 text-sm text-[#0f172a] bg-white rounded-xl border outline-none",
-            "placeholder:text-[#94a3b8] transition-all duration-200",
+            "w-full text-sm text-[#0f172a] bg-white rounded-xl border outline-none",
+            "placeholder:text-[#94a3b8]  transition-all duration-200",
             // fixed left padding (accounts for icon) — fixed right padding
             "pl-10",
             suffix ? "pr-11" : "pr-4",
@@ -411,6 +411,7 @@ export default function RegisterPage() {
                       placeholder="Your full name"
                       value={name}
                       onChange={setName}
+                      icon={<User className="w-4 h-4" />}
                       error={errors.name}
                       autoComplete="name"
                     />
@@ -423,6 +424,7 @@ export default function RegisterPage() {
                       placeholder="you@example.com"
                       value={email}
                       onChange={setEmail}
+                      icon={<Mail className="w-4 h-4" />}
                       error={errors.email}
                       autoComplete="email"
                     />
@@ -436,6 +438,7 @@ export default function RegisterPage() {
                         placeholder="Min. 8 characters"
                         value={password}
                         onChange={setPassword}
+                        icon={<Lock className="w-4 h-4" />}
                         error={errors.password}
                         autoComplete="new-password"
                         suffix={
@@ -480,7 +483,7 @@ export default function RegisterPage() {
                         placeholder="Re-enter your password"
                         value={confirm}
                         onChange={setConfirm}
-                        // icon={<Lock className="w-4 h-4" />}
+                        icon={<Lock className="w-4 h-4" />}
                         error={errors.confirm}
                         autoComplete="new-password"
                         suffix={

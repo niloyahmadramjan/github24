@@ -40,12 +40,12 @@ function Field({
 
       <div className="relative flex items-center">
         {/* Left icon — pointer-events none so it never blocks clicks */}
-        <span
+        {/* <span
           aria-hidden="true"
           className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-[#94a3b8] z-10"
         >
           {icon}
-        </span>
+        </span> */}
 
         <input
           id={id}
@@ -262,6 +262,7 @@ export default function LoginPage() {
                 placeholder="you@example.com"
                 value={email}
                 onChange={setEmail}
+                icon={<Mail className="w-4 h-4 " />}
                 error={errors.email}
                 autoComplete="email"
               />
@@ -274,6 +275,7 @@ export default function LoginPage() {
                 placeholder="••••••••"
                 value={password}
                 onChange={setPassword}
+                icon={<Lock className="w-4 h-4" />}
                 error={errors.password}
                 autoComplete="current-password"
                 suffix={

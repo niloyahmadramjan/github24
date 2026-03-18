@@ -195,9 +195,9 @@ export default function ResetPasswordPage() {
                     New Password
                   </label>
                   <div className="relative">
-                    <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#94a3b8] pointer-events-none">
-                      <Lock className="w-4 h-4" />
-                    </span>
+                    {/* <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#94a3b8] pointer-events-none"> */}
+                      {/* <Lock className="w-4 h-4" />
+                    </span> */}
                     <input
                       id="password" type={showPass ? "text" : "password"}
                       placeholder="Min. 8 characters" value={password}
@@ -229,9 +229,9 @@ export default function ResetPasswordPage() {
                     Confirm New Password
                   </label>
                   <div className="relative">
-                    <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#94a3b8] pointer-events-none">
+                    {/* <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#94a3b8] pointer-events-none">
                       <Lock className="w-4 h-4" />
-                    </span>
+                    </span> */}
                     <input
                       id="confirm" type={showConfirm ? "text" : "password"}
                       placeholder="Re-enter your password" value={confirm}
